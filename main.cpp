@@ -91,8 +91,6 @@ int main()
        {
             case 1: loginSystem existingUser;
                     existingUser.readUserInfo();
-                    userInput eStuff;           // Error !! Please look into it
-                    eStuff.toDoItem();          // Error !! PLease look into it
                     break;
 
             case 2: loginSystem newUser;
@@ -107,5 +105,3 @@ int main()
     while(loginExitVar=='Y' || loginExitVar=='y');
 
 }
-
-
