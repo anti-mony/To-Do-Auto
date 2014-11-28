@@ -102,12 +102,11 @@ class Stock
  void Output()
  {puts(Item);}
 
- void CountWord()
+};
+
+void CountWord()
 {
-    ofstream a("3.txt",ios::out | ios::app | ios::binary);
-    ofstream b("2.txt",ios::out | ios::app | ios::binary);
-    //a<<"i"<<endl;
-    //b<<"am"<<endl;
+
     ifstream usernameObj("list.txt",ios::in|ios::binary);
     string strname;
     int chck=0;
@@ -210,12 +209,12 @@ class Stock
                 priorityCount+=2;
             }
         }
-    if(strname == ".")
-    {
-    storePriority[x]=priorityCount;
-      priorityCount=0;
-      x++;
-    }
+      if(strname == ".")
+      {
+      storePriority[x]=priorityCount;
+        priorityCount=0;
+        x++;
+      }
 
     }
 
@@ -224,7 +223,7 @@ class Stock
 
 
 
-};
+
 
 
 void viewOldList(char Fname[])
