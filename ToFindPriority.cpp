@@ -37,7 +37,7 @@ void CountWord()
                 priorityCount+=10;
             }
         }
-
+        
         ifstream dataFile9("9.txt",ios::in | ios::binary);
         while(dataFile9 >> wordchk)
         {
