@@ -44,7 +44,6 @@ class loginSystem
         char userName[12];
         char password[10];
         char ch;
-
         int serial;
 
 
@@ -249,7 +248,7 @@ void Create(char Fname[])
  Fil.write((char*)&S,sizeof(S));
  cout<<"More(Y/N)?";cin>>Choice;
  }
- while (Choice=='Y');
+ while (Choice=='Y' || Choice=='y');
  Fil.close();
 }
 
@@ -286,14 +285,16 @@ int main()
    char loginExitVar;
    int loginMenu;
    int subLoginMenu;
+   string tempstr;
    cout << endl;
 
 
    do
    {
-        cout<<"Enter 1 to login"<<endl;
-        cout<<"Enter 2 for creating a new user"<<endl;
-        cout<<"Enter 3 to exit"<<endl;
+        cout<<"Enter 1 to Login"<<endl;
+        cout<<"Enter 2 for Creating a New User"<<endl;
+        cout<<"Enter 3 to Exit"<<endl;
+        cout<<"Enter 4 for Help(We don't mean SOS!!)"<<endl;
         cin >> loginMenu;
         cout << endl;
         loginSystem existingUser;
@@ -314,8 +315,8 @@ int main()
                                             SortList(tempusr);
                                             for(i=0;i<70;i++)
                                             {
-                                                delay(50);
-                                                cout<<'177';
+                                                Sleep(100);
+                                                printf("%c",177);
                                             }
 
                                 case 2 : viewOldList(tempusr);
@@ -337,14 +338,23 @@ int main()
 
             case 3: cout<<"Thanks"<<endl;
                     return 0;
+
+            case 4: ifstream Help("Help.txt",ios::in);
+                    while(Help>>tempstr)
+                    {
+                        cout<<tempstr;
+                    }
+                    break;
+
+
         }
 
-       Exit:cout<<"Do you wish to login again Press Y/N"<<endl;
-       cin>>loginExitVar;
-       cout<<endl;
-       system("cls");
+       Exit:
+        cout<<"Do you wish to login again Press Y/N"<<endl;
+        cin>>loginExitVar;
+        cout<<endl;
+        system("cls");
    }
     while(loginExitVar=='Y' || loginExitVar=='y');
 
 }
-
