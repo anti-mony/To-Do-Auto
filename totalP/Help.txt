@@ -1,0 +1,15 @@
+*** How To ?? ***
+1. Enter the specific thing that you have to do.
+Example :
+-->I have to watch a movie . NO !!
+-->Movie . Yeah !!
+
+2. At the end of each task put a period.
+Example :
+-->Maths Lecture   NO !!
+-->Maths Lecture . Yeah !!
+  
+#
+Warning : Use your own brain. We take no responsiblity of any earthquakes , fires , blasts that you might cause because of this program.
+This program comes with no warranty.
+  
