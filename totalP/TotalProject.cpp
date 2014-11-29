@@ -1,9 +1,11 @@
 #include <iostream>
 #include<string>
+#include<string.h>
 #include<fstream>
 #include<windows.h>
 #include<conio.h>
 #include<stdio.h>
+#define debug 0
 
 using namespace std;
 
@@ -11,7 +13,8 @@ using namespace std;
 
 int storePriority[8];
 int x=0;
-string tempusr,tmppass;
+char tempusr[12];
+
 
 
 void EnterNote()
@@ -26,6 +29,7 @@ void CreateNote(char username[])
     char ch='y';
     ofstream fout;
     fout.open(username,ios::out);
+
     while(ch=='y'||ch=='Y')
     {
         ob.EnterNote();
@@ -37,6 +41,7 @@ void CreateNote(char username[])
 }
 
 
+
 class loginSystem
 {
     private:
@@ -45,6 +50,8 @@ class loginSystem
         char password[10];
         char ch;
         int serial;
+        char tmppass[10];
+
 
 
     public:
@@ -56,23 +63,34 @@ class loginSystem
             cin>>userName;
             cout<<"Enter your password(** MAX 10 characters **)"<<endl;
             cin>>password;
-            ofstream dataFile("logindat.dat",ios::out | ios::app | ios::binary);
-            dataFile << userName <<' '<< password<<endl;
+
+            ofstream dataFile("logindat.txt",ios::out | ios::app);
+            dataFile << userName <<' '<< password<<endl<<endl;
         }
         int readUserInfo()
         {
-            ifstream dataFile("logindat",ios::in | ios::binary);
-
+            ifstream dataFile("logindat.txt",ios::in);
             cout<<"Please enter your Username (** MAX 12 characters **)"<<endl;
             cin>>tempusr;
             cout<<"Enter your password(** MAX 10 characters **)"<<endl;
             cin>>tmppass;
+            if(debug==1)
+            {
+                cout<<tempusr<<' '<<tmppass<<endl<<endl;
+            }
             int chck=0;
             while(dataFile >> userName >> password)
             {
-                if(userName==tempusr && password==tmppass)
+                if(debug==1)
                 {
-                  cout<<"You have successfully logged in"<<endl;
+                    cout<<userName<<' '<<password<<endl;
+                    cout<<"\t"<<strcmp(userName,tempusr)<<endl;
+                    cout<<"\t"<<strcmp(password,tmppass)<<endl;
+                }
+
+                if(strcmp(userName,tempusr)==0 && strcmp(password,tmppass)==0)
+                {
+                    cout<<"You have successfully logged in"<<endl;
                     chck=1;
                     return chck;
                 }
@@ -102,11 +120,12 @@ class Stock
  void Output()
  {puts(Item);}
 
-};
-
-void CountWord()
+ void CountWord()
 {
-
+    //ofstream a("3.txt",ios::out | ios::app | ios::binary);
+    //ofstream b("2.txt",ios::out | ios::app | ios::binary);
+    //a<<"i"<<endl;
+    //b<<"am"<<endl;
     ifstream usernameObj("list.txt",ios::in|ios::binary);
     string strname;
     int chck=0;
@@ -211,9 +230,9 @@ void CountWord()
         }
       if(strname == ".")
       {
-      storePriority[x]=priorityCount;
-        priorityCount=0;
-        x++;
+        storePriority[x]=priorityCount;
+          priorityCount=0;
+          x++;
       }
 
     }
@@ -223,7 +242,7 @@ void CountWord()
 
 
 
-
+};
 
 
 void viewOldList(char Fname[])
@@ -254,29 +273,31 @@ void Create(char Fname[])
 
 void SortList(char Fname[])
 {
- fstream F;
- F.open(Fname,ios::binary|ios::in|ios::out);
- //Move to the last record
- F.seekg(0,ios::end); //To move the record pointer to end of file
- int NOR=F.tellg()/sizeof(Stock); //To find number of records in the file
- Stock EJ,EJP1;
- for (int i=0;i<NOR-1;i++)
- for (int j=0;j<NOR-i-1;j++)
- {
- F.seekg(j*sizeof(Stock)); //To move the file pointer to jth position
- F.read((char*)&EJ,sizeof(Stock)); //reads jth record
- F.read((char*)&EJP1,sizeof(Stock)); //reads (j+1)th record
+     fstream F;
+     F.open(Fname,ios::binary|ios::in|ios::out);
+     //Move to the last record
+     F.seekg(0,ios::end); //To move the record pointer to end of file
+     int NOR=F.tellg()/sizeof(Stock); //To find number of records in the file
+     Stock EJ,EJP1;
+     for (int i=0;i<NOR-1;i++)
+     {
+        for (int j=0;j<NOR-i-1;j++)
+        {
+             F.seekg(j*sizeof(Stock)); //To move the file pointer to jth position
+             F.read((char*)&EJ,sizeof(Stock)); //reads jth record
+             F.read((char*)&EJP1,sizeof(Stock)); //reads (j+1)th record
 
+                  if (EJ.GetEno<EJP1.GetEno) //******HERE GetEno Function returns the priority level of the line*****
+             /* But I have stored the value of the tasks in an array StorePriority . Fix these*/
+                {
+                   F.seekp(j*sizeof(Stock));
+                   F.write((char*)&EJP1,sizeof(Stock));
+                   F.write((char*)&EJ,sizeof(Stock));
+                }
+         }
+     F.close();
+    }
 
- if (EJ.GetEno()<EJP1.GetEno()) //******HERE GetEno Function returns the priority level of the line*****
- /* But I have stored the value of the tasks in an array StorePriority . Fix these*/
- {
- F.seekp(j*sizeof(Stock));
- F.write((char*)&EJP1,sizeof(Stock));
- F.write((char*)&EJ,sizeof(Stock));
- }
- }
- F.close();
 }
 
 int main()
@@ -302,24 +323,27 @@ int main()
        {
             case 1 :if(existingUser.readUserInfo()== 1 )
                     {
+                            system("cls");
                             cout<<"\tWhat do you want to do now ??"<<endl;
-                            cout<<" 1. Create a new to-do list "<<endl<<;
-                            cout<<" 2. View previous list "<<endl<<;
-                            cout<<" 3. Create Notes "<<endl<<;
+                            cout<<" 1. Create a new to-do list "<<endl;
+                            cout<<" 2. View previous list "<<endl;
+                            cout<<" 3. Create Notes "<<endl;
                             cout<<" 4. Logout"<<endl;
+                            cin>>subLoginMenu;
                             switch(subLoginMenu)
                             {
                                 case 1 : Create(tempusr);
                                             int i;
                                             SortList(tempusr);
-                                            for(i=0;i<70;i++)
+                                            for(i=0;i<50;i++)
                                             {
                                                 Sleep(100);
                                                 printf("%c",177);
                                             }
+                                            cout<<"You have successfully created a to-do"<<endl;
 
                                 case 2 : viewOldList(tempusr);
-                                case 3 : CreateNote(tempuser);
+                                //case 3 : CreateNote(tempusr);
                                 case 4 : cout<<endl<<"Thanks !!  :)"<<endl;
                                             goto Exit;
                             }
@@ -341,7 +365,14 @@ int main()
             case 4: ifstream Help("Help.txt",ios::in);
                     while(Help>>tempstr)
                     {
-                        cout<<tempstr;
+                        if(tempstr=="..")
+                        {
+                            cout<<endl;
+                        }
+                        if(tempstr!="..")
+                        {
+                            cout<<tempstr<<' ';
+                        }
                     }
                     break;
 
