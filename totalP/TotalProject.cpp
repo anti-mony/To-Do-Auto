@@ -5,7 +5,7 @@
 #include<windows.h>
 #include<conio.h>
 #include<stdio.h>
-#define debug 0
+#define debug 1
 
 using namespace std;
 
@@ -14,22 +14,26 @@ using namespace std;
 int storePriority[8];
 int x=0;
 char tempusr[12];
+/*
+class Pragya
+{   public:
+    void EnterNote()
+    {
+        char str[20];
+        cout<<"Enter your notes";
+        cin.getline(str,20);
+    }
+};
 
 
-
-void EnterNote()
-{
-    char str[20];
-    cout<<"Enter your notes";
-    cin.getline(str,20);
-}
 
 void CreateNote(char username[])
 {
+    char x[15];
     char ch='y';
     ofstream fout;
-    fout.open(username,ios::out);
-
+    fout.open(x,ios::out);
+    Pragya ob;
     while(ch=='y'||ch=='Y')
     {
         ob.EnterNote();
@@ -40,7 +44,7 @@ void CreateNote(char username[])
     }
 }
 
-
+*/
 
 class loginSystem
 {
@@ -113,20 +117,27 @@ class loginSystem
 
 class Stock
 {
- char Item[20];
- public:
- void Input()
- {gets(Item);}
- void Output()
- {puts(Item);}
 
- void CountWord()
+ public:
+    char Item[200];
+    void Input()
+    {
+        gets(Item);
+    }
+ void Output()
+ {
+     cout<<Item;
+}
+
+};
+
+ void CountWord(char str[])
 {
     //ofstream a("3.txt",ios::out | ios::app | ios::binary);
     //ofstream b("2.txt",ios::out | ios::app | ios::binary);
     //a<<"i"<<endl;
     //b<<"am"<<endl;
-    ifstream usernameObj("list.txt",ios::in|ios::binary);
+    ifstream usernameObj(str,ios::in|ios::binary);
     string strname;
     int chck=0;
 
@@ -228,12 +239,12 @@ class Stock
                 priorityCount+=2;
             }
         }
-      if(strname == ".")
-      {
-        storePriority[x]=priorityCount;
-          priorityCount=0;
-          x++;
-      }
+    if(strname == ".")
+    {
+    storePriority[x]=priorityCount;
+      priorityCount=0;
+      x++;
+    }
 
     }
 
@@ -242,7 +253,7 @@ class Stock
 
 
 
-};
+
 
 
 void viewOldList(char Fname[])
@@ -255,20 +266,39 @@ void viewOldList(char Fname[])
  Fil.close();
 }
 
+
 void Create(char Fname[])
 {
- fstream Fil; Stock S;
- Fil.open(Fname,ios::binary|ios::out);
- char Choice;
- do
- {
- S.Input();
- Fil.write((char*)&S,sizeof(S));
- cout<<"More(Y/N)?";cin>>Choice;
- }
- while (Choice=='Y' || Choice=='y');
- Fil.close();
+     fstream Fil(Fname,ios::binary|ios::out);
+     Stock S;
+     char Choice;
+     do
+     {
+         S.Input();
+         Fil.write((char*)&S,sizeof(S));
+         cout<<"More(Y/N)?";
+         cin>>Choice;
+    }
+         while (Choice=='Y' || Choice=='y');
+         Fil.close();
 }
+
+Stock S;
+
+void toDoItem(char str[])
+    {
+        char item[200];
+
+        ofstream inputFile(str,ios::out | ios::binary);
+        cout<<"PLease enter the stuff that you want to do"<<endl;
+        do
+        {
+            S.Input();
+            inputFile<<S.Item<<endl;
+        }
+        while(strcmp(S.Item,"exit")!=0);
+
+    }
 
 
 void SortList(char Fname[])
@@ -286,19 +316,19 @@ void SortList(char Fname[])
              F.seekg(j*sizeof(Stock)); //To move the file pointer to jth position
              F.read((char*)&EJ,sizeof(Stock)); //reads jth record
              F.read((char*)&EJP1,sizeof(Stock)); //reads (j+1)th record
-
-                  if (EJ.GetEno<EJP1.GetEno) //******HERE GetEno Function returns the priority level of the line*****
+                if (storePriority[i]<storePriority[i+1]) //******HERE GetEno Function returns the priority level of the line*****
              /* But I have stored the value of the tasks in an array StorePriority . Fix these*/
-                {
-                   F.seekp(j*sizeof(Stock));
-                   F.write((char*)&EJP1,sizeof(Stock));
-                   F.write((char*)&EJ,sizeof(Stock));
-                }
-         }
-     F.close();
+                 {
+                 F.seekp(j*sizeof(Stock));
+                 F.write((char*)&EJP1,sizeof(Stock));
+                 F.write((char*)&EJ,sizeof(Stock));
+                 }
+        }
     }
-
+     F.close();
 }
+
+
 
 int main()
 {
@@ -332,16 +362,24 @@ int main()
                             cin>>subLoginMenu;
                             switch(subLoginMenu)
                             {
-                                case 1 : Create(tempusr);
-                                            int i;
-                                            SortList(tempusr);
+                                case 1 : toDoItem(tempusr);
+                                            CountWord(tempusr);
+                                            if(debug == 1)
+                                            {
+                                                cout<<storePriority[0]<<endl;
+                                                cout<<storePriority[1]<<endl;
+                                                cout<<storePriority[2]<<endl;
+                                            }
+                                           int i;
+                                           SortList(tempusr);
+                                            /*
                                             for(i=0;i<50;i++)
                                             {
                                                 Sleep(100);
                                                 printf("%c",177);
                                             }
                                             cout<<"You have successfully created a to-do"<<endl;
-
+                                            */
                                 case 2 : viewOldList(tempusr);
                                 //case 3 : CreateNote(tempusr);
                                 case 4 : cout<<endl<<"Thanks !!  :)"<<endl;
