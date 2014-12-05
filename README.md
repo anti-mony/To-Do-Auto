@@ -6,6 +6,8 @@ To-Do-Auto
 <p> A to-do list which prioritizes on it's own. </p>
     Something that makes your decisions a bit easier i.e. a bit Ideal.
 
+---
+
 #### LIST OF FILES
 
 1. Everything complete is put in Total Project Folder.
@@ -16,15 +18,16 @@ To-Do-Auto
 
 * "Help.txt" contains information on how to actually go through with the program.
 
+
 2. Everything outside.
 
-* The ".cpp" files are just bits of code of the program. 
+* The ".cpp" files are just bits of code of the program.
 
 * "Key.xlsx" contains the key words , not completely but close to maximum.
 
 * "Log.docx" contains the log of our meetings , totally unmaintained.
 
-
+---
 
 #### HOW TO USE THE PROGRAM
 
@@ -32,6 +35,7 @@ To-Do-Auto
 
 2. That's it.
 
+---
 
 #### USEFUL INFORMATION
 
@@ -41,7 +45,7 @@ To-Do-Auto
 
 3.It's not self learning. It's static (not dynamic).
 
-
+---
 
 #### Contributors
 
