@@ -10,17 +10,17 @@ To-Do-Auto
 
 1. Everything complete is put in Total Project Folder.
 
-2. All the files that store priorities of words. Our so called database.
+* All the files that store priorities of words. Our so called database.
 
-3. The complete code ".cpp" file.
+* The complete code ".cpp" file.
 
-4. "Help.txt" contains information on how to actually go through with the program.
+* "Help.txt" contains information on how to actually go through with the program.
 
-5. Everything outside is just the bits of code.
+2. Everything outside is just the bits of code.
 
-6. "Key.xlsx" contains the key words , not completely but close to maximum.
+* "Key.xlsx" contains the key words , not completely but close to maximum.
 
-7. "Log.docx" contains the log of our meetings , totally unmaintained.
+* "Log.docx" contains the log of our meetings , totally unmaintained.
 
 
 
