@@ -10,34 +10,34 @@ To-Do-Auto
 
 #### LIST OF FILES
 
-1. Everything complete is put in Total Project Folder.
+** Everything complete is put in Total Project Folder. **
 
-* All the files that store priorities of words. Our so called database.
+  * All the files that store priorities of words. Our so called database.
 
-* The complete code ".cpp" file.
+  * The complete code ".cpp" file.  
 
-* "Help.txt" contains information on how to actually go through with the program.
+  * "Help.txt" contains information on how to actually go through with the program.
 
 
-2. Everything outside.
+** Everything outside. **
 
-* The ".cpp" files are just bits of code of the program.
+  * The ".cpp" files are just bits of code of the program.
 
-* "Key.xlsx" contains the key words , not completely but close to maximum.
+  * "Key.xlsx" contains the key words , not completely but close to maximum.
 
-* "Log.docx" contains the log of our meetings , totally unmaintained.
+  * "Log.docx" contains the log of our meetings , totally unmaintained.
 
 ---
 
 #### HOW TO USE THE PROGRAM
 
-1. Just compile and execute the code contained in the ".cpp" file.
+1. Just compile and execute the code contained in the "TotalProject.cpp" file.
 
 2. That's it.
 
 ---
 
-#### USEFUL INFORMATION
+#### IMPORTANT INFORMATION
 
 1.The priority data is already created by the developers.
 
@@ -47,7 +47,7 @@ To-Do-Auto
 
 ---
 
-#### Contributors
+#### DEVELOPERS
 
 1. Sushant Bansal
 
@@ -55,7 +55,7 @@ To-Do-Auto
 
 3. Mohak Garg
 
-4. Tanmaya Murthi
+4. Tanmaya Murthy
 
 5. Rohit Das
 
