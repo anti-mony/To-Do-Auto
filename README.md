@@ -16,7 +16,9 @@ To-Do-Auto
 
 * "Help.txt" contains information on how to actually go through with the program.
 
-2. Everything outside is just the bits of code.
+2. Everything outside.
+
+* The ".cpp" files are just bits of code of the program. 
 
 * "Key.xlsx" contains the key words , not completely but close to maximum.
 
