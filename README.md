@@ -10,7 +10,7 @@ To-Do-Auto
 
 #### LIST OF FILES
 
-** Everything complete is put in Total Project Folder. **
+**Everything complete is put in Total Project Folder.**
 
   * All the files that store priorities of words. Our so called database.
 
@@ -19,7 +19,7 @@ To-Do-Auto
   * "Help.txt" contains information on how to actually go through with the program.
 
 
-** Everything outside. **
+**Everything outside.**
 
   * The ".cpp" files are just bits of code of the program.
 
