@@ -4,7 +4,7 @@ To-Do-Auto
 ## ICP Project (Group " J ") || CSD101 Project
 
 <p> A to-do list which prioritizes on it's own. </p>
-    Something that makes your decisions a bit easier i.e. a bit *Ideal.*
+    Something that makes your decisions a bit easier i.e. a bit Ideal.
 
 ---
 
