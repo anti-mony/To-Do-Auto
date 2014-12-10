@@ -61,16 +61,38 @@ class loginSystem
     public:
 
 
+
         void createUserInfo()
         {
+            int flag=0;
             cout<<"Please enter your desired User name (** MAX 12 characters **)"<<endl;
             cin>>userName;
-            cout<<"Enter your password(** MAX 10 characters **)"<<endl;
-            cin>>password;
+            ifstream dataFile1("logindat.txt",ios::in);
+            while(dataFile1 >> tempusr >> password)
+            {
+                if(strcmp(userName,tempusr)==0)
+                {
+                    flag=1;
+                }
+                if(flag==1)
+                {
+                    cout<<"This username already exists"<<endl;
+                    return ;
+                }
+                if(flag==0)
+                {
+                    cout<<"Enter your password(** MAX 10 characters **)"<<endl;
+                    cin>>password;
+                }
+            }
 
             ofstream dataFile("logindat.txt",ios::out | ios::app);
             dataFile << userName <<' '<< password<<endl<<endl;
         }
+
+
+
+
         int readUserInfo()
         {
             ifstream dataFile("logindat.txt",ios::in);
