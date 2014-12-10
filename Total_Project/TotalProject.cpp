@@ -227,6 +227,7 @@ class Stock
             if(wordchk == strname)
             {
                 //cout<<wordchk;
+
                 chck=1;
                 priorityCount+=5;
             }
@@ -321,6 +322,8 @@ void toDoItem(char str[])
         while(strcmp(S.Item,"exit")!=0);
 
     }
+
+
 
 
 void SortList(char Fname[])
