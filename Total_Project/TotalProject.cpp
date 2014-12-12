@@ -5,7 +5,7 @@
 #include<windows.h>
 #include<conio.h>
 #include<stdio.h>
-#define debug 1
+#define debug 0
 
 using namespace std;
 
@@ -61,38 +61,16 @@ class loginSystem
     public:
 
 
-
         void createUserInfo()
         {
-            int flag=0;
             cout<<"Please enter your desired User name (** MAX 12 characters **)"<<endl;
             cin>>userName;
-            ifstream dataFile1("logindat.txt",ios::in);
-            while(dataFile1 >> tempusr >> password)
-            {
-                if(strcmp(userName,tempusr)==0)
-                {
-                    flag=1;
-                }
-                if(flag==1)
-                {
-                    cout<<"This username already exists"<<endl;
-                    return ;
-                }
-                if(flag==0)
-                {
-                    cout<<"Enter your password(** MAX 10 characters **)"<<endl;
-                    cin>>password;
-                }
-            }
+            cout<<"Enter your password(** MAX 10 characters **)"<<endl;
+            cin>>password;
 
             ofstream dataFile("logindat.txt",ios::out | ios::app);
             dataFile << userName <<' '<< password<<endl<<endl;
         }
-
-
-
-
         int readUserInfo()
         {
             ifstream dataFile("logindat.txt",ios::in);
@@ -146,10 +124,10 @@ class Stock
     {
         gets(Item);
     }
- void Output()
- {
-     cout<<Item;
-}
+    void Output()
+    {
+        cout<<Item;
+    }
 
 };
 
@@ -227,7 +205,6 @@ class Stock
             if(wordchk == strname)
             {
                 //cout<<wordchk;
-
                 chck=1;
                 priorityCount+=5;
             }
@@ -281,10 +258,17 @@ class Stock
 
 void viewOldList(char Fname[])
 {
- fstream Fil; Stock S;
- Fil.open(Fname,ios::binary|ios::in);
- while (Fil.read((char*)&S,sizeof(S)))
- S.Output();
+ fstream Fil;
+
+ Fil.open(Fname,ios::in);
+ char Lin[80];
+ while (Fil.getline(Lin,80))//Checks for End of File
+ {
+ Fil.getline(Lin,80);//Reading a line from File
+ for (int I=0;I<=strlen(Lin)-1;I++)
+ cout<<Lin[I];
+ cout<<endl;
+ }
 
  Fil.close();
 }
@@ -292,71 +276,339 @@ void viewOldList(char Fname[])
 
 void Create(char Fname[])
 {
-     fstream Fil(Fname,ios::binary|ios::out);
-     Stock S;
-     char Choice;
+    fstream Fil;
+     Fil.open(Fname,ios::out);
+     char Lin[200];
+     char Q;
+    cout<<"Enter Text";
      do
-     {
-         S.Input();
-         Fil.write((char*)&S,sizeof(S));
-         cout<<"More(Y/N)?";
-         cin>>Choice;
-    }
-         while (Choice=='Y' || Choice=='y');
-         Fil.close();
-}
-
-Stock S;
-
-void toDoItem(char str[])
     {
-        char item[200];
 
-        ofstream inputFile(str,ios::out | ios::binary);
-        cout<<"PLease enter the stuff that you want to do"<<endl;
-        do
-        {
-            S.Input();
-            inputFile<<S.Item<<endl;
-        }
-        while(strcmp(S.Item,"exit")!=0);
+        gets(Lin); //User inputs the data in a string Lin
+        Fil<<Lin<<endl; //Writing of content of Lin on file
 
+        cout<<"More(Y/N)?";
+        cin>>Q;
     }
 
+    while (Q == 'Y' || Q == 'y');
+
+    Fil.close();
+}
 
 
 
 void SortList(char Fname[])
-{
-     fstream F;
-     F.open(Fname,ios::binary|ios::in|ios::out);
-     //Move to the last record
-     F.seekg(0,ios::end); //To move the record pointer to end of file
-     int NOR=F.tellg()/sizeof(Stock); //To find number of records in the file
-     Stock EJ,EJP1;
-     for (int i=0;i<NOR-1;i++)
-     {
-        for (int j=0;j<NOR-i-1;j++)
+{   fstream F;
+    F.open(Fname,ios::in);
+
+    int temp,countx=0,k=0;
+    char Lin[80];
+
+while (F.getline(Lin,80)) //Checks for total number of lines
+{ countx++;}
+int i,j;
+char Lin2[countx][80],strtemp[80];   //Initializing an array of strings called lin2
+
+for (i=0; i<countx; i++)  //Storing all lines in a string array called Lin2
+{F.getline(Lin2[i],80);}
+
+//Code to sort the array that contains all priority numbers as well as the string array accordingly
+  for(i=0;i<countx;i++)
+  {
+        for(j=i+1;i<countx;j++)
         {
-             F.seekg(j*sizeof(Stock)); //To move the file pointer to jth position
-             F.read((char*)&EJ,sizeof(Stock)); //reads jth record
-             F.read((char*)&EJP1,sizeof(Stock)); //reads (j+1)th record
-                if (storePriority[i]<storePriority[i+1]) //******HERE GetEno Function returns the priority level of the line*****
-             /* But I have stored the value of the tasks in an array StorePriority . Fix these*/
-                 {
-                 F.seekp(j*sizeof(Stock));
-                 F.write((char*)&EJP1,sizeof(Stock));
-                 F.write((char*)&EJ,sizeof(Stock));
-                 }
+            if(storePriority[i]<storePriority[j]) //returnp returns the priority of the line
+            {
+                temp=storePriority[j];
+                storePriority[j]=storePriority[i];
+                storePriority[i]=temp;
+                strcpy(strtemp,Lin2[j]);
+                strcpy(Lin2[j],Lin2[i]);
+                strcpy(Lin2[i],strtemp);
+            }
         }
-    }
-     F.close();
+  }
+
+
+
+//To overwrite the sorted array of string Lin2 in the file
+while (F.getline(Lin,80) && i<countx)
+{F<<Lin2[i]<<endl; //Writing of content of Lin on file
+ k++;
 }
+
+F.close();
+}
+
+void editPriority(char *newkey,int priority)
+{
+
+    cout<<"enter the new keyword"<<endl;
+    cin>>newkey;
+    cout<<"enter the priority of the keyword"<<endl;
+    cin>>priority;
+    if(priority==2)
+    {
+        ofstream datafile2("2.txt",ios::out | ios::app);
+        datafile2<<newkey<<endl;
+    }
+    if(priority==3)
+    {
+       ofstream datafile3("3.txt",ios::out | ios::app);
+        datafile3<<newkey<<endl;
+    }
+    if(priority==4)
+    {
+       ofstream datafile4("4.txt",ios::out | ios::app);
+        datafile4<<newkey<<endl;
+    }
+    if(priority==5)
+    {
+        ofstream datafile5("5.txt",ios::out | ios::app);
+        datafile5<<newkey<<endl;
+    }
+    if(priority==6)
+    {
+        ofstream datafile6("6.txt",ios::out | ios::app);
+        datafile6<<newkey<<endl;
+    }
+    if(priority==7)
+    {
+        ofstream datafile7("7.txt",ios::out | ios::app);
+        datafile7<<newkey<<endl;
+    }
+    if(priority==8)
+    {
+        ofstream datafile8("8.txt",ios::out | ios::app);
+        datafile8<<newkey<<endl;
+    }
+    if(priority==9)
+    {
+        ofstream datafile9("9.txt",ios::out | ios::app);
+        datafile9<<newkey<<endl;
+    }
+    if(priority==10)
+    {
+        ofstream datafile10("10.txt",ios::out | ios::app);
+        datafile10<<newkey<<endl;
+    }
+
+}
+
+void findDelete()
+{
+   ifstream usernameObj("D",ios::in|ios::binary);
+   char strname[20];
+   char strde1[20];
+   string S ;
+   int k=0;
+   cout<<"enter the keyword you want to delete"<<endl;
+   cin>>strde1;
+    while(k)
+    {
+        string wordchk;
+        ifstream dataFile10("10.txt",ios::in | ios::binary);
+        while(dataFile10 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("10.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile9("9.txt",ios::in | ios::binary);
+        while(dataFile9 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("9.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile8("8.txt",ios::in | ios::binary);
+        while(dataFile8 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("8.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile7("7.txt",ios::in | ios::binary);
+        while(dataFile7 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("7.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile6("6.txt",ios::in | ios::binary);
+        while(dataFile6 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("6.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile5("5.txt",ios::in | ios::binary);
+        while(dataFile5 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("5.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile4("4.txt",ios::in | ios::binary);
+        while(dataFile4 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("4.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile3("3.txt",ios::in | ios::binary);
+        while(dataFile3 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("3.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return ;
+            }
+
+        }
+        ifstream dataFile2("2.txt",ios::in | ios::binary);
+        while(dataFile2 >> wordchk)
+        {
+            if(wordchk==strde1)
+            {
+                ofstream D("D",ios::out | ios :: binary);
+                if(wordchk != strde1)
+                {
+                    D<<wordchk<<endl;
+                }
+
+                ifstream D2("D",ios::in | ios :: binary);
+                ofstream I2("2.txt",ios::out | ios :: binary );
+                while(D2>>S)
+                {
+                    I2<<S<<endl;
+                }
+                return;
+            }
+
+        }
+
+    }
+
+}
+
 
 
 
 int main()
 {
+    /*
    char loginExitVar;
    int loginMenu;
    int subLoginMenu;
@@ -387,24 +639,28 @@ int main()
                             cin>>subLoginMenu;
                             switch(subLoginMenu)
                             {
-                                case 1 : toDoItem(tempusr);
+                                case 1 :    Create(tempusr); // Function not working properly .
+                                            //toDoItem(tempusr);
                                             CountWord(tempusr);
+
                                             if(debug == 1)
                                             {
                                                 cout<<storePriority[0]<<endl;
                                                 cout<<storePriority[1]<<endl;
                                                 cout<<storePriority[2]<<endl;
+                                                cout<<storePriority[3]<<endl;
+                                                cout<<storePriority[4]<<endl;
                                             }
                                            int i;
                                            SortList(tempusr);
-                                            /*
+
                                             for(i=0;i<50;i++)
                                             {
                                                 Sleep(100);
                                                 printf("%c",177);
                                             }
                                             cout<<"You have successfully created a to-do"<<endl;
-                                            */
+
                                 case 2 : viewOldList(tempusr);
                                 //case 3 : CreateNote(tempusr);
                                 case 4 : cout<<endl<<"Thanks !!  :)"<<endl;
@@ -426,6 +682,7 @@ int main()
                     return 0;
 
             case 4: ifstream Help("Help.txt",ios::in);
+                    system("cls");
                     while(Help>>tempstr)
                     {
                         if(tempstr=="..")
@@ -449,5 +706,6 @@ int main()
         system("cls");
    }
     while(loginExitVar=='Y' || loginExitVar=='y');
-
+    */
+    findDelete();
 }
