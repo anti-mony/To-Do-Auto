@@ -11,47 +11,46 @@ void editPriority( )
         ofstream datafile2("2.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==3)
+    else if(priority==3)
     {
        ofstream datafile3("3.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==4)
+    else if(priority==4)
     {
        ofstream datafile4("4.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==5)
+    else if(priority==5)
     {
         ofstream datafile5("5.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==6)
+    else if(priority==6)
     {
         ofstream datafile6("6.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==7)
+    else if(priority==7)
     {
         ofstream datafile7("7.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==8)
+    else if(priority==8)
     {
         ofstream datafile8("8.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==9)
+    else if(priority==9)
     {
         ofstream datafile9("2.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-    if(priority==10)
+    else if(priority==10)
     {
         ofstream datafile10("10.txt",ios::out | ios::app);
         datafile2<<newkey<<endl;
     }
-
 }
 
 void findDelete( )
