@@ -1,11 +1,11 @@
 #include <iostream>
-#include<string>
-#include<string.h>
-#include<fstream>
-#include<windows.h>
-#include<conio.h>
-#include<stdio.h>
-#include<cstdlib>
+#include <string>
+#include <string.h>
+#include <fstream>
+#include <windows.h>
+#include <conio.h>
+#include <stdio.h>
+#include <cstdlib>
 #define debug 0
 
 using namespace std;
